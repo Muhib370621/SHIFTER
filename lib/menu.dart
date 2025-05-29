@@ -27,81 +27,81 @@ class _MenuState extends State<Menu> {
   bool load = false;
   double rating = 0.0;
   String read="";
-  void driverRate() async {
-    String soap2 = '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <getdriverrate xmlns="http://Mgra.WS/">
-      <ID>${widget.user.id}</ID>
-    </getdriverrate>
-  </soap:Body>
-</soap:Envelope>''';
-    http.Response response2 = await http
-        .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-            headers: {
-              "SOAPAction": "http://Mgra.WS/getdriverrate",
-              "Content-Type": "text/xml;charset=UTF-8",
-            },
-            body: utf8.encode(soap2),
-            encoding: Encoding.getByName("UTF-8"))
-        .then((onValue) {
-      return onValue;
-    });
-    String json = parse(response2.body)
-        .getElementsByTagName('getdriverrateResult')[0]
-        .text;
-    final decoded = jsonDecode(json);
-    print(decoded);
-    rating = double.parse(decoded['rate']);
-    read = decoded['notcount'];
-
-    setState(() {});
-  }
-
-  void checkActive() async {
-    setState(() {
-      load = true;
-    });
-    String soap2 = '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <CheckActive xmlns="http://Mgra.WS/">
-      <UserID>${widget.user.id}</UserID>
-      <Type>1</Type>
-    </CheckActive>
-  </soap:Body>
-</soap:Envelope>''';
-    http.Response response2 = await http
-        .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-            headers: {
-              "SOAPAction": "http://Mgra.WS/CheckActive",
-              "Content-Type": "text/xml;charset=UTF-8",
-            },
-            body: utf8.encode(soap2),
-            encoding: Encoding.getByName("UTF-8"))
-        .then((onValue) {
-      return onValue;
-    });
-    String json =
-        parse(response2.body).getElementsByTagName('CheckActiveResult')[0].text;
-    final decoded = jsonDecode(json);
-    active = decoded;
-    print(active);
-    if (active == '0') {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      prefs.setString('Status', '0');
-    }
-    setState(() {
-      load = false;
-    });
-  }
+//   void driverRate() async {
+//     String soap2 = '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <getdriverrate xmlns="http://Mgra.WS/">
+//       <ID>${widget.user.id}</ID>
+//     </getdriverrate>
+//   </soap:Body>
+// </soap:Envelope>''';
+//     http.Response response2 = await http
+//         .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//             headers: {
+//               "SOAPAction": "http://Mgra.WS/getdriverrate",
+//               "Content-Type": "text/xml;charset=UTF-8",
+//             },
+//             body: utf8.encode(soap2),
+//             encoding: Encoding.getByName("UTF-8"))
+//         .then((onValue) {
+//       return onValue;
+//     });
+//     String json = parse(response2.body)
+//         .getElementsByTagName('getdriverrateResult')[0]
+//         .text;
+//     final decoded = jsonDecode(json);
+//     print(decoded);
+//     rating = double.parse(decoded['rate']);
+//     read = decoded['notcount'];
+//
+//     setState(() {});
+//   }
+//
+//   void checkActive() async {
+//     setState(() {
+//       load = true;
+//     });
+//     String soap2 = '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <CheckActive xmlns="http://Mgra.WS/">
+//       <UserID>${widget.user.id}</UserID>
+//       <Type>1</Type>
+//     </CheckActive>
+//   </soap:Body>
+// </soap:Envelope>''';
+//     http.Response response2 = await http
+//         .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//             headers: {
+//               "SOAPAction": "http://Mgra.WS/CheckActive",
+//               "Content-Type": "text/xml;charset=UTF-8",
+//             },
+//             body: utf8.encode(soap2),
+//             encoding: Encoding.getByName("UTF-8"))
+//         .then((onValue) {
+//       return onValue;
+//     });
+//     String json =
+//         parse(response2.body).getElementsByTagName('CheckActiveResult')[0].text;
+//     final decoded = jsonDecode(json);
+//     active = decoded;
+//     print(active);
+//     if (active == '0') {
+//       SharedPreferences prefs = await SharedPreferences.getInstance();
+//
+//       prefs.setString('Status', '0');
+//     }
+//     setState(() {
+//       load = false;
+//     });
+//   }
 
   @override
   void initState() {
     loc = globals.loc??'';
-    driverRate();
-    checkActive();
+    // driverRate();
+    // checkActive();
     super.initState();
   }
 
@@ -254,7 +254,7 @@ class _MenuState extends State<Menu> {
                                       child: FrontPage(
                                         user: widget.user,
                                         tab: 0,
-                                        key: key,
+                                        // key: key,
                                       ))));
                         } else {
                           showDialog(
@@ -369,34 +369,34 @@ class _MenuState extends State<Menu> {
                     child: Container(),
                   ),
                   GestureDetector(
-                    onTap: () async {
-                      await addStringToSF(loc == 'en' ? 'ar' : 'en');
-                      globals.loc = loc == 'en' ? 'ar' : 'en';
-                      String soap = '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <UpdateLanguage xmlns="http://Mgra.WS/">
-      <UserID>${widget.user.id}</UserID>
-      <type>1</type>
-      <language>${loc == 'en' ? '0' : '1'}</language>
-    </UpdateLanguage>
-  </soap:Body>
-</soap:Envelope>''';
-                      http.Response response = await http
-                          .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-                              headers: {
-                                "SOAPAction": "http://Mgra.WS/UpdateLanguage",
-                                "Content-Type": "text/xml;charset=UTF-8",
-                              },
-                              body: utf8.encode(soap),
-                              encoding: Encoding.getByName("UTF-8"))
-                          .then((onValue) {
-                        return onValue;
-                      });
-                      print('${response.body}');
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Wrapper()));
-                    },
+//                     onTap: () async {
+//                       await addStringToSF(loc == 'en' ? 'ar' : 'en');
+//                       globals.loc = loc == 'en' ? 'ar' : 'en';
+//                       String soap = '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <UpdateLanguage xmlns="http://Mgra.WS/">
+//       <UserID>${widget.user.id}</UserID>
+//       <type>1</type>
+//       <language>${loc == 'en' ? '0' : '1'}</language>
+//     </UpdateLanguage>
+//   </soap:Body>
+// </soap:Envelope>''';
+//                       http.Response response = await http
+//                           .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//                               headers: {
+//                                 "SOAPAction": "http://Mgra.WS/UpdateLanguage",
+//                                 "Content-Type": "text/xml;charset=UTF-8",
+//                               },
+//                               body: utf8.encode(soap),
+//                               encoding: Encoding.getByName("UTF-8"))
+//                           .then((onValue) {
+//                         return onValue;
+//                       });
+//                       print('${response.body}');
+//                       Navigator.push(context,
+//                           MaterialPageRoute(builder: (context) => Wrapper()));
+//                     },
                     child: Container(
                       alignment: Alignment.bottomCenter,
                       padding:

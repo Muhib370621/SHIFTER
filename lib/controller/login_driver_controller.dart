@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:shifter/home.dart';
 import 'package:shifter/home_language.dart';
 import 'package:shifter/services/api_services/app_services.dart';
+import 'package:shifter/services/local_storage/local_storage.dart';
+import 'package:shifter/services/local_storage/local_storage_keys.dart';
 import 'package:shifter/view/auth/otp_verification_screen.dart';
 
 import '../core/utils/prompts.dart';
@@ -24,7 +26,10 @@ class LoginDriverController extends GetxController {
         "123456",
       );
       Prompts.successSnackBar("User Logged in Successfully!");
-      Get.to(()=> OtpVerificationScreen());
+      Get.to(() => OtpVerificationScreen());
+      LocalStorage.saveJson(
+          key: LocalStorageKeys.customerID,
+          value: result["value"]["data"]["id"].toString());
 
       isLoading.value = false;
       return true;

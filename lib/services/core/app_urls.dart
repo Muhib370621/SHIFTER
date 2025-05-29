@@ -7,8 +7,16 @@ class AppUrls {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Auth Urls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
   static String loginDriverUrl = "$baseUrl/LoginDriver";
   static String verifyDriverOtpUrl = "$baseUrl/DriverCheckVerify";
+  static String getDriverByID = "$baseUrl/GetDriverByID";
+  static String updateDriver = "$baseUrl/UpdateDriver";
+  static String getNotifications = "$baseUrl/GetNotifications";
 
 
-  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~App Urls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Order Urls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+  static String getDriverNewOrders = "$baseUrl/DriverNewOrders";
+  static String getDriverCurrentOrders = "$baseUrl/DriverCurrentOrders";
+  static String getDriverAllOrders = "$baseUrl/DriverAllOrders";
+  static String acceptOrder = "$baseUrl/AcceptOrder";
+
 
 }

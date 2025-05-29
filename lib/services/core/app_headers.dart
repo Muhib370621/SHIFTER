@@ -16,6 +16,15 @@ class AppHeaders {
 
     return authorizationHeader;
   }
+  static contentTypeWIthApplicationJsonAndAccessToken(String accessToken) {
+    Map<String, String>? authorizationHeader = {
+      "accept":"*/*",
+      'Content-Type': 'application/json',
+      'Authorization': accessToken
+    };
+
+    return authorizationHeader;
+  }
 
   static contentTypeWIthFormData() {
     Map<String, String>? authorizationHeader = {

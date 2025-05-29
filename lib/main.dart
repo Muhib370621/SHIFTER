@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:shifter/services/local_storage/local_storage.dart';
 import 'package:shifter/wrapper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'globals.dart' as globals;
@@ -24,7 +25,7 @@ void main() async {
     globals.loc = await getStringValuesSF();
   }
     // await Firebase.initializeApp();
-
+LocalStorage.init();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]).then((_) {
     runApp(MyApp());

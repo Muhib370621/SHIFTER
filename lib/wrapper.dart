@@ -93,7 +93,7 @@ Future onSelectNotify(String? payload) async {
                       child: FrontPage(
                         user: user,
                         tab: 2,
-                        key: key,
+                        // key: key,
                       ))));
     } else {
       final key = GlobalKey<FrontPageState>();
@@ -107,7 +107,7 @@ Future onSelectNotify(String? payload) async {
                       child: FrontPage(
                         user: user,
                         tab: 2,
-                        key: key,
+                        // key: key,
                       ))));
     }
   } else if (data['notificationtype'] == 'Force') {
@@ -125,7 +125,7 @@ Future onSelectNotify(String? payload) async {
                     child: FrontPage(
                       user: user,
                       tab: 1,
-                      key: key,
+                      // key: key,
                     ))));
   }
   /*  else if (data['notificationtype'] == 'Chatting') {
@@ -163,7 +163,7 @@ Future onSelectNotify(String? payload) async {
                     child: FrontPage(
                       user: user,
                       tab: 0,
-                      key: key,
+                      // key: key,
                     ))));
   }
   /*  else if (data['notificationtype'] == 'Invoice') {
@@ -190,7 +190,7 @@ Future onSelectNotify(String? payload) async {
                     child: FrontPage(
                       user: user,
                       tab: 0,
-                      key: key,
+                      // key: key,
                     ))));
 
     /*  Navigator.push(
@@ -626,7 +626,7 @@ class _WrapperState extends State<Wrapper> with WidgetsBindingObserver {
             globals.keys[globals.keys.length - 1].currentState?.loadOrders =
             true;
           });
-          await globals.keys[globals.keys.length - 1].currentState?.loadNew();
+          // await globals.keys[globals.keys.length - 1].currentState?.loadNew();
           globals.keys[globals.keys.length - 1].currentState?.setState(() {
             globals.keys[globals.keys.length - 1].currentState?.loadOrders =
             false;
@@ -635,7 +635,7 @@ class _WrapperState extends State<Wrapper> with WidgetsBindingObserver {
           globals.keys[globals.keys.length - 1].currentState?.setState(() {
             globals.keys[globals.keys.length - 1].currentState?.loadOrders = true;
           });
-          await globals.keys[globals.keys.length - 1].currentState?.loadPending();
+          // await globals.keys[globals.keys.length - 1].currentState?.loadPending();
 
           globals.keys[globals.keys.length - 1].currentState?.setState(() {
             globals.keys[globals.keys.length - 1].currentState?.loadOrders = true;
@@ -644,7 +644,7 @@ class _WrapperState extends State<Wrapper> with WidgetsBindingObserver {
           globals.keys[globals.keys.length - 1].currentState?.setState(() {
             globals.keys[globals.keys.length - 1].currentState?.loadOrders = true;
           });
-          await globals.keys[globals.keys.length - 1].currentState?.loadAll();
+          // await globals.keys[globals.keys.length - 1].currentState?.loadAll();
 
           globals.keys[globals.keys.length - 1].currentState?.setState(() {
             globals.keys[globals.keys.length - 1].currentState?.loadOrders = false;
@@ -738,7 +738,7 @@ class _WrapperState extends State<Wrapper> with WidgetsBindingObserver {
           return WillPopScope(
               onWillPop: () async => false,
               child: FrontPage(
-                key: key,
+                // key: key,
                 tab: widget.tab,
                 user: user,
               ));
@@ -746,7 +746,7 @@ class _WrapperState extends State<Wrapper> with WidgetsBindingObserver {
           return WillPopScope(
               onWillPop: () async => false,
               child: FrontPage(
-                key: key,
+                // key: key,
                 tab: widget.tab,
                 user: user,
               ));
@@ -756,7 +756,7 @@ class _WrapperState extends State<Wrapper> with WidgetsBindingObserver {
           return WillPopScope(
               onWillPop: () async => false,
               child: FrontPage(
-                key: key,
+                // key: key,
                 tab: widget.tab,
                 user: user,
               ));
@@ -775,7 +775,7 @@ class _WrapperState extends State<Wrapper> with WidgetsBindingObserver {
           return WillPopScope(
               onWillPop: () async => false,
               child: FrontPage(
-                key: key,
+                // key: key,
                 tab: widget.tab,
                 user: user,
               ));

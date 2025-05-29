@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shifter/controller/main_screen_controllers/notification_controller.dart';
 import 'package:shifter/front_page.dart';
 import 'package:shifter/payment_ask.dart';
 import 'package:shifter/user.dart';
@@ -19,64 +21,67 @@ class IncomingMessages extends StatefulWidget {
 class _IncomingMessagesState extends State<IncomingMessages> {
   String loc="";
   List<IncomingMessageWidget> messages = <IncomingMessageWidget>[];
-  loadMessages() async {
-    messages = [];
-    String soap = '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetDriverNotifcations xmlns="http://Mgra.WS/">
-      <DriverID>${widget.user.id}</DriverID>
-    </GetDriverNotifcations>
-  </soap:Body>
-</soap:Envelope>''';
-    http.Response response = await http
-        .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-            headers: {
-              "SOAPAction": "http://Mgra.WS/GetDriverNotifcations",
-              "Content-Type": "text/xml;charset=UTF-8",
-            },
-            body: utf8.encode(soap),
-            encoding: Encoding.getByName("UTF-8"))
-        .then((onValue) {
-      return onValue;
-    });
-    print(response.body);
-    if (response.statusCode == 200) {
-      String json = parse(response.body)
-          .getElementsByTagName('GetDriverNotifcationsResult')[0]
-          .text;
-      final decoded = jsonDecode(json);
-      for (int i = 0; i < decoded.length; i++) {
-        bool read = decoded[i]['ReadFlag'] == 'True';
-        messages.add(IncomingMessageWidget(
-          user: widget.user,
-          read: read,
-          title: decoded[i]['Title'],
-          body: decoded[i]['Body'],
-          time: decoded[i]['Time'],
-          type: decoded[i]['Type'],
-          orderID: decoded[i]['OrderID'].toString(),
-          id: decoded[i]['ID'].toString(),
-          ordertype: decoded[i]['OrderType'],
-          amount: decoded[i]['amount'],
-          status: decoded[i]['status'],
-          client: decoded[i]['clientname'],
-          callback: () {
-            loadMessages();
-            setState(() {});
-          },
-        ));
-      }
+//   loadMessages() async {
+//     messages = [];
+//     String soap = '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <GetDriverNotifcations xmlns="http://Mgra.WS/">
+//       <DriverID>${widget.user.id}</DriverID>
+//     </GetDriverNotifcations>
+//   </soap:Body>
+// </soap:Envelope>''';
+//     http.Response response = await http
+//         .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//             headers: {
+//               "SOAPAction": "http://Mgra.WS/GetDriverNotifcations",
+//               "Content-Type": "text/xml;charset=UTF-8",
+//             },
+//             body: utf8.encode(soap),
+//             encoding: Encoding.getByName("UTF-8"))
+//         .then((onValue) {
+//       return onValue;
+//     });
+//     print(response.body);
+//     if (response.statusCode == 200) {
+//       String json = parse(response.body)
+//           .getElementsByTagName('GetDriverNotifcationsResult')[0]
+//           .text;
+//       final decoded = jsonDecode(json);
+//       for (int i = 0; i < decoded.length; i++) {
+//         bool read = decoded[i]['ReadFlag'] == 'True';
+//         messages.add(IncomingMessageWidget(
+//           user: widget.user,
+//           read: read,
+//           title: decoded[i]['Title'],
+//           body: decoded[i]['Body'],
+//           time: decoded[i]['Time'],
+//           type: decoded[i]['Type'],
+//           orderID: decoded[i]['OrderID'].toString(),
+//           id: decoded[i]['ID'].toString(),
+//           ordertype: decoded[i]['OrderType'],
+//           amount: decoded[i]['amount'],
+//           status: decoded[i]['status'],
+//           client: decoded[i]['clientname'],
+//           callback: () {
+//             loadMessages();
+//             setState(() {});
+//           },
+//         ));
+//       }
+//
+//       setState(() {});
+//     }
+//   }
 
-      setState(() {});
-    }
-  }
+  final notificationController = Get.put(NotificationController());
 
   @override
   void initState() {
     loc = globals.loc??'';
     super.initState();
-    loadMessages();
+    notificationController.getNotifications();
+    // loadMessages();
   }
 
   @override
@@ -313,7 +318,7 @@ class _IncomingMessageWidgetState extends State<IncomingMessageWidget> {
                       child: FrontPage(
                         user: widget.user,
                         tab: 0,
-                        key: key,
+                        // key: key,
                       ))));
         } /* else if (widget.type == 'OrderUpdate' || widget.type == 'ViewOrder') {
           if (widget.ordertype == '1') {
@@ -340,7 +345,7 @@ class _IncomingMessageWidgetState extends State<IncomingMessageWidget> {
                       child: FrontPage(
                         user: widget.user,
                         tab: 0,
-                        key: key,
+                        // key: key,
                       ))));
         } /* else if (widget.type == 'Chatting' || widget.type == 'Invoice') {
           Navigator.push(
@@ -365,7 +370,7 @@ class _IncomingMessageWidgetState extends State<IncomingMessageWidget> {
                       child: FrontPage(
                         user: widget.user,
                         tab: 2,
-                        key: key,
+                        // key: key,
                       ))));
         } else {
           Navigator.push(
