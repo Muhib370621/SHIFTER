@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "635898830704",
+    "firebase_url": "https://sunlit-descent-427507-g7-default-rtdb.firebaseio.com",
+    "project_id": "sunlit-descent-427507-g7",
+    "storage_bucket": "sunlit-descent-427507-g7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635898830704:android:83847fcc5ea037df0ab9b5",
+        "android_client_info": {
+          "package_name": "com.codino.shifter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzNb5_OZfiV80KkJq3cWtPL-zkFY5LlqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635898830704:android:f3506654969a613d0ab9b5",
+        "android_client_info": {
+          "package_name": "com.example.shifter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzNb5_OZfiV80KkJq3cWtPL-zkFY5LlqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
