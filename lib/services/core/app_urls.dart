@@ -17,6 +17,8 @@ class AppUrls {
   static String getDriverCurrentOrders = "$baseUrl/DriverCurrentOrders";
   static String getDriverAllOrders = "$baseUrl/DriverAllOrders";
   static String acceptOrder = "$baseUrl/AcceptOrder";
+  static String driverGetOrderByID = "$baseUrl/DriverGetOrderByID";
+  static String changeOrderStatus = "$baseUrl/OrderStatus";
 
 
 }

@@ -521,50 +521,51 @@ class FrontPageState extends State<FrontPage>
               children: [Loading()],
             ),
           )
-              : SingleChildScrollView(
-            child: SafeArea(
-              child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Color(0xff2b2b2b),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FloatingActionButton(
-                            heroTag: null,
-                            mini: true,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.menu,
-                              color: Colors.black,
+              : Obx(() {
+            return SingleChildScrollView(
+              child: SafeArea(
+                child: Container(
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width,
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 20),
+                        decoration: BoxDecoration(
+                          color: Color(0xff2b2b2b),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FloatingActionButton(
+                              heroTag: null,
+                              mini: true,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.menu,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                _scaffoldKey.currentState!.openDrawer();
+                              },
                             ),
-                            onPressed: () {
-                              _scaffoldKey.currentState!.openDrawer();
-                            },
-                          ),
-                          loadStat
-                              ? CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation(
-                                Colors.white),
-                          )
-                              : Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.center,
-                            children: [
-                              CupertinoSwitch(
-                                  value: onlineFlag == 'True'
-                                      ? true
-                                      : false,
-                                  onChanged: (value) async {
+                            loadStat
+                                ? CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(
+                                  Colors.white),
+                            )
+                                : Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              children: [
+                                CupertinoSwitch(
+                                    value: onlineFlag == 'True'
+                                        ? true
+                                        : false,
+                                    onChanged: (value) async {
 //                                                 if (value == true) {
 //                                                   onlineFlag = 'True';
 //                                                 } else {
@@ -655,492 +656,493 @@ class FrontPageState extends State<FrontPage>
 //                                                     loadStat = false;
 //                                                   });
 //                                                 }
-                                  }),
-                              SizedBox(height: 5),
-                              Text(
-                                  onlineFlag == 'True'
-                                      ? globals.loc == 'en'
-                                      ? 'Online'
-                                      : 'متصل'
-                                      : globals.loc == 'en'
-                                      ? 'Offline'
-                                      : 'غير متصل',
-                                  style: TextStyle(
-                                      color: onlineFlag == 'True'
-                                          ? Colors.green
-                                          : Colors.red,
-                                      fontSize: 13))
-                            ],
-                          ),
-                          Stack(
-                            children: [
-                              FloatingActionButton(
-                                heroTag: null,
-                                mini: true,
-                                backgroundColor: Colors.white,
-                                child: Icon(
-                                  Icons.notifications_active,
-                                  color: Colors.black,
+                                    }),
+                                SizedBox(height: 5),
+                                Text(
+                                    onlineFlag == 'True'
+                                        ? globals.loc == 'en'
+                                        ? 'Online'
+                                        : 'متصل'
+                                        : globals.loc == 'en'
+                                        ? 'Offline'
+                                        : 'غير متصل',
+                                    style: TextStyle(
+                                        color: onlineFlag == 'True'
+                                            ? Colors.green
+                                            : Colors.red,
+                                        fontSize: 13))
+                              ],
+                            ),
+                            Stack(
+                              children: [
+                                FloatingActionButton(
+                                  heroTag: null,
+                                  mini: true,
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.notifications_active,
+                                    color: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                IncomingMessages(
+                                                    user: widget.user)));
+                                  },
                                 ),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              IncomingMessages(
-                                                  user: widget.user)));
-                                },
-                              ),
-                              Positioned(
-                                top: 5,
-                                right: 5,
-                                child: notifyFlag == '1'
-                                    ? Container(
-                                  height: 10,
-                                  width: 10,
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius:
-                                      BorderRadius.circular(
-                                          50)),
+                                Positioned(
+                                  top: 5,
+                                  right: 5,
+                                  child: notifyFlag == '1'
+                                      ? Container(
+                                    height: 10,
+                                    width: 10,
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            50)),
+                                  )
+                                      : Container(
+                                    height: 0,
+                                    width: 0,
+                                  ),
                                 )
-                                    : Container(
-                                  height: 0,
-                                  width: 0,
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      _tab == 2
+                          ? Container(
+                        decoration:
+                        BoxDecoration(color: Colors.grey[200]),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 5),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        left: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent)
+                                            : BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey),
+                                        right: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey)
+                                            : BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent))),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text('$weekOrders',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight:
+                                            FontWeight.bold)),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      globals.loc == 'en'
+                                          ? 'Orders per week'
+                                          : 'الطلبات في الأسبوع',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    _tab == 2
-                        ? Container(
-                      decoration:
-                      BoxDecoration(color: Colors.grey[200]),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 5),
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      left: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent)
-                                          : BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey),
-                                      right: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey)
-                                          : BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent))),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('$weekOrders',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight:
-                                          FontWeight.bold)),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    globals.loc == 'en'
-                                        ? 'Orders per week'
-                                        : 'الطلبات في الأسبوع',
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14),
-                                  )
-                                ],
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      left: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent)
-                                          : BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey),
-                                      right: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey)
-                                          : BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent))),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('$weekEarn',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight:
-                                          FontWeight.bold)),
-                                  SizedBox(height: 10),
-                                  Text(
-                                      globals.loc == 'en'
-                                          ? 'Weekly Profit'
-                                          : 'الدخل الأسبوعي',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14))
-                                ],
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        left: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent)
+                                            : BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey),
+                                        right: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey)
+                                            : BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent))),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text('$weekEarn',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight:
+                                            FontWeight.bold)),
+                                    SizedBox(height: 10),
+                                    Text(
+                                        globals.loc == 'en'
+                                            ? 'Weekly Profit'
+                                            : 'الدخل الأسبوعي',
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14))
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(from,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      )),
-                                  SizedBox(height: 10),
-                                  Text(to,
-                                      style:
-                                      TextStyle(fontSize: 16))
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                        : Container(
-                      decoration:
-                      BoxDecoration(color: Colors.grey[200]),
-                      padding: EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 5),
-                      child: Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      left: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent)
-                                          : BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey),
-                                      right: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey)
-                                          : BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent))),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('$dayOrders',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight:
-                                          FontWeight.bold)),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    globals.loc == 'en'
-                                        ? 'Today\'s Orders'
-                                        : 'طلبات اليوم',
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      left: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent)
-                                          : BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey),
-                                      right: globals.loc == 'en'
-                                          ? BorderSide(
-                                          width: 2.0,
-                                          color: Colors.grey)
-                                          : BorderSide(
-                                          width: 0.0,
-                                          color: Colors
-                                              .transparent))),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('$dayEarn',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight:
-                                          FontWeight.bold)),
-                                  SizedBox(height: 10),
-                                  Text(
-                                      globals.loc == 'en'
-                                          ? 'Today\'s Earnings'
-                                          : 'دخل اليوم',
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14))
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                      INTL.DateFormat('EEEE')
-                                          .format(DateTime.now()),
-                                      style: TextStyle(
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(from,
+                                        style: TextStyle(
                                           fontSize: 16,
-                                          fontWeight:
-                                          FontWeight.bold)),
-                                  SizedBox(height: 10),
-                                  Text(
-                                      INTL.DateFormat('dd/MM/yyyy')
-                                          .format(DateTime.now()),
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 14))
-                                ],
+                                        )),
+                                    SizedBox(height: 10),
+                                    Text(to,
+                                        style:
+                                        TextStyle(fontSize: 16))
+                                  ],
+                                ),
                               ),
                             ),
+                          ],
+                        ),
+                      )
+                          : Container(
+                        decoration:
+                        BoxDecoration(color: Colors.grey[200]),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 5),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        left: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent)
+                                            : BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey),
+                                        right: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey)
+                                            : BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent))),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text('$dayOrders',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight:
+                                            FontWeight.bold)),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      globals.loc == 'en'
+                                          ? 'Today\'s Orders'
+                                          : 'طلبات اليوم',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        left: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent)
+                                            : BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey),
+                                        right: globals.loc == 'en'
+                                            ? BorderSide(
+                                            width: 2.0,
+                                            color: Colors.grey)
+                                            : BorderSide(
+                                            width: 0.0,
+                                            color: Colors
+                                                .transparent))),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text('$dayEarn',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight:
+                                            FontWeight.bold)),
+                                    SizedBox(height: 10),
+                                    Text(
+                                        globals.loc == 'en'
+                                            ? 'Today\'s Earnings'
+                                            : 'دخل اليوم',
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14))
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                        INTL.DateFormat('EEEE')
+                                            .format(DateTime.now()),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight:
+                                            FontWeight.bold)),
+                                    SizedBox(height: 10),
+                                    Text(
+                                        INTL.DateFormat('dd/MM/yyyy')
+                                            .format(DateTime.now()),
+                                        style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 14))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      TabBar(
+                        unselectedLabelColor: Colors.grey,
+                        isScrollable: true,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        labelColor: Colors.black,
+                        indicatorColor: Color(0xffae5a95),
+                        indicatorWeight: 3.0,
+                        labelStyle:
+                        TextStyle(fontSize: 13, fontFamily: 'Almarai'),
+                        unselectedLabelStyle:
+                        TextStyle(fontSize: 13, fontFamily: 'Almarai'),
+                        controller: controller,
+                        onTap: (i) async {
+                          setState(() {
+                            _tab = i;
+                            loadOrders = true;
+                          });
+                          if (_tab == 0) {
+                            // await loadNew();
+                            orderController.getDriverNewOrders();
+                          } else if (_tab == 1) {
+                            orderController.getDriverInProgressOrders();
+
+                            // await loadPending();
+                          } else {
+                            orderController.getDriverAllOrders();
+
+                            // await loadAll();
+                          }
+                          setState(() {
+                            loadOrders = false;
+                          });
+                        },
+                        tabs: <Widget>[
+                          Tab(
+                            text: globals.loc == 'en' ? 'New' : 'طلب جديد',
+                          ),
+                          Tab(
+                            text: globals.loc == 'en'
+                                ? 'In Progress'
+                                : 'طلب قيد الاجراء',
+                          ),
+                          Tab(
+                            text: globals.loc == 'en'
+                                ? 'All Orders'
+                                : 'جميع الطلبات',
                           ),
                         ],
                       ),
-                    ),
-                    TabBar(
-                      unselectedLabelColor: Colors.grey,
-                      isScrollable: true,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      labelColor: Colors.black,
-                      indicatorColor: Color(0xffae5a95),
-                      indicatorWeight: 3.0,
-                      labelStyle:
-                      TextStyle(fontSize: 13, fontFamily: 'Almarai'),
-                      unselectedLabelStyle:
-                      TextStyle(fontSize: 13, fontFamily: 'Almarai'),
-                      controller: controller,
-                      onTap: (i) async {
-                        setState(() {
-                          _tab = i;
-                          loadOrders = true;
-                        });
-                        if (_tab == 0) {
-                          // await loadNew();
-                          orderController.getDriverNewOrders();
-                        } else if (_tab == 1) {
-                          orderController.getDriverInProgressOrders();
-
-                          // await loadPending();
-                        } else {
-                          orderController.getDriverAllOrders();
-
-                          // await loadAll();
-                        }
-                        setState(() {
-                          loadOrders = false;
-                        });
-                      },
-                      tabs: <Widget>[
-                        Tab(
-                          text: globals.loc == 'en' ? 'New' : 'طلب جديد',
-                        ),
-                        Tab(
-                          text: globals.loc == 'en'
-                              ? 'In Progress'
-                              : 'طلب قيد الاجراء',
-                        ),
-                        Tab(
-                          text: globals.loc == 'en'
-                              ? 'All Orders'
-                              : 'جميع الطلبات',
-                        ),
-                      ],
-                    ),
-                    _tab == 0
-                        ? ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      itemCount:
-                      orderController.listOfNewOrders.length,
-                      itemBuilder: (context, index) =>
-                          NewV2(
-                            customer: orderController
-                                .listOfNewOrders[index].customer ??
-                                "",
-                            timerEnd: (id) {},
-                            date: orderController
-                                .listOfNewOrders[index].date
-                                .toString(),
-                            distance: "0 km",
-                            drop: "drop",
-                            markers: _markers,
-                            notes: "notes",
-                            photo: orderController
-                                .listOfNewOrders[index].photo ??
-                                "",
-                            pick: orderController.listOfNewOrders[index]
-                                .pickAddress ??
-                                "",
-                            pickText: " ",
-                            polyLines: _polyLines,
-                            profit: "0",
-                            timer: "0",
-                            id: "id",
-                            user: frontPageController.userModel.value,
-                            type: "type",
-                            branch: "branch",
-                            onAcceptOrder: () {
-                              // accepting the order
-                              orderController.acceptOrder(
-                                  orderController
-                                      .listOfNewOrders[index].id
-                                      .toString());
-                            },
-                          ),
-                    )
-                        : _tab == 2 ? ListView.builder(
+                      _tab == 0
+                          ? ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
                         itemCount:
-                        orderController.listOfAllOrders.length,
+                        orderController.listOfNewOrders.length,
                         itemBuilder: (context, index) =>
-                            AllV2(amount: "0",
-                                user: frontPageController.userModel.value,
-                                id: orderController
-                                    .listOfAllOrders[index].id.toString(),
-                                no: orderController
-                                    .listOfAllOrders[index].referancecode
-                                    .toString(),
-                                status: "status")
-                      // NewV2(
-                      //   customer: orderController
-                      //       .listOfAllOrders[index].customer ??
-                      //       "",
-                      //   timerEnd: (id) {},
-                      //   date: orderController
-                      //       .listOfAllOrders[index].date
-                      //       .toString(),
-                      //   distance: "0 km",
-                      //   drop: "drop",
-                      //   markers: _markers,
-                      //   notes: "notes",
-                      //   photo: orderController
-                      //       .listOfAllOrders[index].photo ??
-                      //       "",
-                      //   pick: orderController.listOfAllOrders[index]
-                      //       .pickAddress ??
-                      //       "",
-                      //   pickText: " ",
-                      //   polyLines: _polyLines,
-                      //   profit: "0",
-                      //   timer: "0",
-                      //   id: "id",
-                      //   user: frontPageController.userModel.value,
-                      //   type: "type",
-                      //   branch: "branch",
-                      //   onAcceptOrder: () {
-                      //     // accepting the order
-                      //     orderController.acceptOrder(
-                      //         orderController
-                      //             .listOfAllOrders[index].id
-                      //             .toString());
-                      //   },
-                      // ),
-                    ) : ListView.builder(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      itemCount:
-                      0,
-                      itemBuilder: (context, index) =>
-                          NewV2(
-                            customer: orderController
-                                .listOfNewOrders[index].customer ??
-                                "",
-                            timerEnd: (id) {},
-                            date: orderController
-                                .listOfNewOrders[index].date
-                                .toString(),
-                            distance: "0 km",
-                            drop: "drop",
-                            markers: _markers,
-                            notes: "notes",
-                            photo: orderController
-                                .listOfNewOrders[index].photo ??
-                                "",
-                            pick: orderController.listOfNewOrders[index]
-                                .pickAddress ??
-                                "",
-                            pickText: " ",
-                            polyLines: _polyLines,
-                            profit: "0",
-                            timer: "0",
-                            id: "id",
-                            user: frontPageController.userModel.value,
-                            type: "type",
-                            branch: "branch",
-                            onAcceptOrder: () {
-                              // accepting the order
-                              orderController.acceptOrder(
-                                  orderController
-                                      .listOfNewOrders[index].id
-                                      .toString());
-                            },
-                          ),
-                    )
-                  ],
+                            NewV2(
+                              customer: orderController
+                                  .listOfNewOrders[index].customer ??
+                                  "",
+                              timerEnd: (id) {},
+                              date: orderController
+                                  .listOfNewOrders[index].date
+                                  .toString(),
+                              distance: "0 km",
+                              drop: "drop",
+                              markers: _markers,
+                              notes: "notes",
+                              photo: orderController
+                                  .listOfNewOrders[index].photo ??
+                                  "",
+                              pick: orderController.listOfNewOrders[index]
+                                  .pickAddress ??
+                                  "",
+                              pickText: " ",
+                              polyLines: _polyLines,
+                              profit: "0",
+                              timer: "0",
+                              id: "id",
+                              user: frontPageController.userModel.value,
+                              type: "type",
+                              branch: "branch",
+                              onAcceptOrder: () {
+                                // accepting the order
+                                orderController.acceptOrder(
+                                    orderController
+                                        .listOfNewOrders[index].id
+                                        .toString());
+                              },
+                            ),
+                      )
+                          : _tab == 2 ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          itemCount:
+                          orderController.listOfAllOrders.length,
+                          itemBuilder: (context, index) =>
+                              AllV2(amount: "0",
+                                  user: frontPageController.userModel.value,
+                                  id: orderController
+                                      .listOfAllOrders[index].id.toString(),
+                                  no: orderController
+                                      .listOfAllOrders[index].referancecode
+                                      .toString(),
+                                  status: "status")
+                        // NewV2(
+                        //   customer: orderController
+                        //       .listOfAllOrders[index].customer ??
+                        //       "",
+                        //   timerEnd: (id) {},
+                        //   date: orderController
+                        //       .listOfAllOrders[index].date
+                        //       .toString(),
+                        //   distance: "0 km",
+                        //   drop: "drop",
+                        //   markers: _markers,
+                        //   notes: "notes",
+                        //   photo: orderController
+                        //       .listOfAllOrders[index].photo ??
+                        //       "",
+                        //   pick: orderController.listOfAllOrders[index]
+                        //       .pickAddress ??
+                        //       "",
+                        //   pickText: " ",
+                        //   polyLines: _polyLines,
+                        //   profit: "0",
+                        //   timer: "0",
+                        //   id: "id",
+                        //   user: frontPageController.userModel.value,
+                        //   type: "type",
+                        //   branch: "branch",
+                        //   onAcceptOrder: () {
+                        //     // accepting the order
+                        //     orderController.acceptOrder(
+                        //         orderController
+                        //             .listOfAllOrders[index].id
+                        //             .toString());
+                        //   },
+                        // ),
+                      ) : ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount:
+                        0,
+                        itemBuilder: (context, index) =>
+                            NewV2(
+                              customer: orderController
+                                  .listOfNewOrders[index].customer ??
+                                  "",
+                              timerEnd: (id) {},
+                              date: orderController
+                                  .listOfNewOrders[index].date
+                                  .toString(),
+                              distance: "0 km",
+                              drop: "drop",
+                              markers: _markers,
+                              notes: "notes",
+                              photo: orderController
+                                  .listOfNewOrders[index].photo ??
+                                  "",
+                              pick: orderController.listOfNewOrders[index]
+                                  .pickAddress ??
+                                  "",
+                              pickText: " ",
+                              polyLines: _polyLines,
+                              profit: "0",
+                              timer: "0",
+                              id: "id",
+                              user: frontPageController.userModel.value,
+                              type: "type",
+                              branch: "branch",
+                              onAcceptOrder: () {
+                                // accepting the order
+                                orderController.acceptOrder(
+                                    orderController
+                                        .listOfNewOrders[index].id
+                                        .toString());
+                              },
+                            ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          )),
+            );
+          })),
     );
   }
 }
@@ -2016,6 +2018,8 @@ class _AllV2State extends State<AllV2> {
         children: [
           GestureDetector(
             onTap: () {
+              final orderController = Get.put(OrderController());
+              orderController.driverGetOrderByID(widget.id);
               Navigator.push(
                   context,
                   MaterialPageRoute(

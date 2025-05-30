@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shifter/controller/main_screen_controllers/order_controller.dart';
 import 'package:shifter/help_one.dart';
 import 'package:shifter/user.dart';
 import 'package:shifter/wrapper.dart';
@@ -66,65 +68,42 @@ class _OrderDetailsState extends State<OrderDetails> {
     setState(() {
       load = true;
     });
-    String soap = '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <GetOrderDetails3 xmlns="http://Mgra.WS/">
-      <OrderID>${widget.orderid}</OrderID>
-      <Language>${globals.loc.toUpperCase()}</Language>
-      <DriverID>${widget.user.id}</DriverID>
-    </GetOrderDetails3>
-  </soap:Body>
-</soap:Envelope>''';
-    http.Response response = await http
-        .post(Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-            headers: {
-              "SOAPAction": "http://Mgra.WS/GetOrderDetails3",
-              "Content-Type": "text/xml;charset=UTF-8",
-            },
-            body: utf8.encode(soap),
-            encoding: Encoding.getByName("UTF-8"))
-        .then((onValue) {
-      return onValue;
-    });
-    String json = parse(response.body)
-        .getElementsByTagName('GetOrderDetails3Result')[0]
-        .text;
-    final decoded = jsonDecode(json);
-    print(decoded);
-    if (decoded != -1) {
-      close = decoded['CloseFlag'];
-      customer = decoded['Customer'];
-      branch = decoded['branch'];
-      phone = decoded['Phone'];
-      pickText = decoded['PickAddresstxt'];
-      pickValue = decoded['PickAddressValue'];
-      reachFlag = decoded['ReachFlag'];
-      reach = decoded['Reach'];
-      leaveFlag = decoded['LeaveFlag'];
-      leave = decoded['Leave'];
-      orderNo = decoded['OrderNo'];
-      dropName = decoded['DropName'];
-      dropPhone = decoded['DropPhone'];
-      dropText = decoded['DropAddresstxt'];
-      dropValue = decoded['DropAddress'];
-      collAmount = decoded['CollectionAmount'];
-      deliverFlag = decoded['DeliverCustomerFlag'];
-      deliver = decoded['DeliverCustomer'];
-      returnATMFlag = decoded['ReturnATMFlag'];
-      returnATM = decoded['ReturnATM'];
-      notes = decoded['Notes'];
-      invoiceno =  decoded['BillNo'];
-      if (close == '1') {
-        notesCont.text = notes;
-      }
-      status = decoded['Status'];
-    }
+    final orderController = Get.put(OrderController());
+    orderController.driverGetOrderByID(orderController.orderModel.value.id.toString());
+      close = orderController.orderModel.value.levelid.toString();
+      customer = orderController.orderModel.value.clientName??"";
+      branch = "branch";
+      phone = "";
+      pickText = orderController.orderModel.value.pickAddress??"";
+      pickValue = orderController.orderModel.value.pickAddressLatLng??"";
+      reachFlag = orderController.orderModel.value.levelid.toString()??"";
+      reach = orderController.orderModel.value.canReachDrop.toString()??"";
+      leaveFlag = "";
+      leave ="";
+      orderNo = orderController.orderModel.value.id.toString()??"";
+      dropName = orderController.orderModel.value.dropAddress.toString()??"";
+      dropPhone ="";
+      dropText = "";
+      dropValue = "";
+      collAmount = "0";
+      deliverFlag = orderController.orderModel.value.id.toString()??"";
+      deliver = "";
+      returnATMFlag = "";
+      returnATM = "";
+      notes = "";
+      invoiceno =  orderController.orderModel.value.referancecode.toString()??"";
+      // if (close == '1') {
+      //   notesCont.text = notes;
+      // }
+      // status = decoded['Status'];
+    // }
     setState(() {
       load = false;
     });
   }
 
+
+  final orderController = Get.put(OrderController());
   @override
   void initState() {
     super.initState();
@@ -385,34 +364,36 @@ class _OrderDetailsState extends State<OrderDetails> {
                                               setState(() {
                                                 load1 = true;
                                               });
-                                              String soap =
-                                                  '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <ReachStoreOrderV2 xmlns="http://Mgra.WS/">
-      <ID>${widget.orderid}</ID>
-      <Status>$reachFlag</Status>
-    </ReachStoreOrderV2>
-  </soap:Body>
-</soap:Envelope>''';
-                                              http.Response response =
-                                                  await http
-                                                      .post(
-                                                          Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-                                                          headers: {
-                                                            "SOAPAction":
-                                                                "http://Mgra.WS/ReachStoreOrderV2",
-                                                            "Content-Type":
-                                                                "text/xml;charset=UTF-8",
-                                                          },
-                                                          body:
-                                                              utf8.encode(soap),
-                                                          encoding: Encoding
-                                                              .getByName(
-                                                                  "UTF-8"))
-                                                      .then((onValue) {
-                                                return onValue;
-                                              });
+//                                               String soap =
+//                                                   '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <ReachStoreOrderV2 xmlns="http://Mgra.WS/">
+//       <ID>${widget.orderid}</ID>
+//       <Status>$reachFlag</Status>
+//     </ReachStoreOrderV2>
+//   </soap:Body>
+// </soap:Envelope>''';
+//                                               http.Response response =
+//                                                   await http
+//                                                       .post(
+//                                                           Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//                                                           headers: {
+//                                                             "SOAPAction":
+//                                                                 "http://Mgra.WS/ReachStoreOrderV2",
+//                                                             "Content-Type":
+//                                                                 "text/xml;charset=UTF-8",
+//                                                           },
+//                                                           body:
+//                                                               utf8.encode(soap),
+//                                                           encoding: Encoding
+//                                                               .getByName(
+//                                                                   "UTF-8"))
+//                                                       .then((onValue) {
+//                                                 return onValue;
+//                                               });
+                                              orderController.changeOrderStatus(orderNo, 2);
+
                                               setState(() {
                                                 load1 = false;
                                               });
@@ -507,35 +488,37 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                   setState(() {
                                                     load2 = true;
                                                   });
-                                                  String soap =
-                                                      '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <LeaveStoreOrderV3 xmlns="http://Mgra.WS/">
-      <ID>${widget.orderid}</ID>
-      <Status>$leaveFlag</Status>
-    </LeaveStoreOrderV3>
-  </soap:Body>
-</soap:Envelope>''';
-                                                  http.Response response =
-                                                      await http
-                                                          .post(
-                                                              Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-                                                              headers: {
-                                                                "SOAPAction":
-                                                                    "http://Mgra.WS/LeaveStoreOrderV3",
-                                                                "Content-Type":
-                                                                    "text/xml;charset=UTF-8",
-                                                              },
-                                                              body: utf8
-                                                                  .encode(soap),
-                                                              encoding: Encoding
-                                                                  .getByName(
-                                                                      "UTF-8"))
-                                                          .then((onValue) {
-                                                    return onValue;
-                                                  });
-                                                    SharedPreferences prefs =
+//                                                   String soap =
+//                                                       '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <LeaveStoreOrderV3 xmlns="http://Mgra.WS/">
+//       <ID>${widget.orderid}</ID>
+//       <Status>$leaveFlag</Status>
+//     </LeaveStoreOrderV3>
+//   </soap:Body>
+// </soap:Envelope>''';
+//                                                   http.Response response =
+//                                                       await http
+//                                                           .post(
+//                                                               Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//                                                               headers: {
+//                                                                 "SOAPAction":
+//                                                                     "http://Mgra.WS/LeaveStoreOrderV3",
+//                                                                 "Content-Type":
+//                                                                     "text/xml;charset=UTF-8",
+//                                                               },
+//                                                               body: utf8
+//                                                                   .encode(soap),
+//                                                               encoding: Encoding
+//                                                                   .getByName(
+//                                                                       "UTF-8"))
+//                                                           .then((onValue) {
+//                                                     return onValue;
+//                                                   });
+                                                  orderController.changeOrderStatus(orderNo, 3);
+
+                                                  SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
                               prefs.setString('ColorStatus', "4");
                                                   setState(() {
@@ -814,37 +797,40 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                         setState(() {
                                                           load3 = true;
                                                         });
-                                                        String soap =
-                                                            '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <StartOrderV3 xmlns="http://Mgra.WS/">
-      <ID>${widget.orderid}</ID>
-      <DriverID>${widget.user.id}</DriverID>
-      <Status>$deliverFlag</Status>
-    </StartOrderV3>
-  </soap:Body>
-</soap:Envelope>''';
-                                                        http.Response response =
-                                                            await http
-                                                                .post(
-                                                                    Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-                                                                    headers: {
-                                                                      "SOAPAction":
-                                                                          "http://Mgra.WS/StartOrderV3",
-                                                                      "Content-Type":
-                                                                          "text/xml;charset=UTF-8",
-                                                                    },
-                                                                    body: utf8
-                                                                        .encode(
-                                                                            soap),
-                                                                    encoding: Encoding
-                                                                        .getByName(
-                                                                            "UTF-8"))
-                                                                .then(
-                                                                    (onValue) {
-                                                          return onValue;
-                                                        });
+//                                                         String soap =
+//                                                             '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <StartOrderV3 xmlns="http://Mgra.WS/">
+//       <ID>${widget.orderid}</ID>
+//       <DriverID>${widget.user.id}</DriverID>
+//       <Status>$deliverFlag</Status>
+//     </StartOrderV3>
+//   </soap:Body>
+// </soap:Envelope>''';
+//                                                         http.Response response =
+//                                                             await http
+//                                                                 .post(
+//                                                                     Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//                                                                     headers: {
+//                                                                       "SOAPAction":
+//                                                                           "http://Mgra.WS/StartOrderV3",
+//                                                                       "Content-Type":
+//                                                                           "text/xml;charset=UTF-8",
+//                                                                     },
+//                                                                     body: utf8
+//                                                                         .encode(
+//                                                                             soap),
+//                                                                     encoding: Encoding
+//                                                                         .getByName(
+//                                                                             "UTF-8"))
+//                                                                 .then(
+//                                                                     (onValue) {
+//                                                           return onValue;
+//                                                         });
+
+                                                        orderController.changeOrderStatus(orderNo, 1);
+
                                                              SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
                               prefs.setString('ColorStatus', "5");
@@ -873,95 +859,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                             )
                                           ],
                                         )
-                                      : Row(
-                                          children: [
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                      globals.loc == 'en'
-                                                          ? 'Return to the store to deliver cash, return payment device, or return the order?'
-                                                          : 'العودة إلى المتجر لتسليم النقود أو ارجاع جهاز الدفع أو ارجاع الطلب؟',
-                                                      style: TextStyle(
-                                                          color: Colors.white)),
-                                                  Text(
-                                                    returnATM,
-                                                    style: TextStyle(
-                                                        color:
-                                                            returnATMFlag == '1'
-                                                                ? Colors.green
-                                                                : Colors.red,
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            close == '1'
-                                                ? Container(height: 0, width: 0)
-                                                : SizedBox(
-                                                    width: 20,
-                                                  ),
-                                            close == '1'
-                                                ? Container(height: 0, width: 0)
-                                                : Switch(
-                                                    activeColor: Colors.green,
-                                                    inactiveThumbColor:
-                                                        Colors.red,
-                                                    inactiveTrackColor: Colors
-                                                        .red
-                                                        .withOpacity(0.5),
-                                                    value: returnATMFlag == '1'
-                                                        ? true
-                                                        : false,
-                                                    onChanged: (value) async {
-                                                      if (value == true) {
-                                                        returnATMFlag = '1';
-                                                      } else {
-                                                        returnATMFlag = '0';
-                                                      }
-                                                      setState(() {
-                                                        load4 = true;
-                                                      });
-                                                      String soap =
-                                                          '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <OrderATM xmlns="http://Mgra.WS/">
-      <ID>${widget.orderid}</ID>
-      <Status>$returnATMFlag</Status>
-    </OrderATM>
-  </soap:Body>
-</soap:Envelope>''';
-                                                      http.Response response =
-                                                          await http
-                                                              .post(
-                                                                  Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-                                                                  headers: {
-                                                                    "SOAPAction":
-                                                                        "http://Mgra.WS/OrderATM",
-                                                                    "Content-Type":
-                                                                        "text/xml;charset=UTF-8",
-                                                                  },
-                                                                  body: utf8
-                                                                      .encode(
-                                                                          soap),
-                                                                  encoding: Encoding
-                                                                      .getByName(
-                                                                          "UTF-8"))
-                                                              .then((onValue) {
-                                                        return onValue;
-                                                      });
-                                                      setState(() {
-                                                        load4 = false;
-                                                      });
-                                                      loadOrderData();
-                                                    })
-                                          ],
-                                        ),
+                                      : SizedBox(),
                                   deliverFlag == '0'
                                       ? Container(height: 0, width: 0)
                                       : SizedBox(height: 15),
@@ -1032,46 +930,48 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                         setState(() {
                                                           load5 = true;
                                                         });
-                                                        String soap =
-                                                            '''<?xml version="1.0" encoding="utf-8"?>
-<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-  <soap:Body>
-    <CompleteOrderV3 xmlns="http://Mgra.WS/">
-      <OrderID>${widget.orderid}</OrderID>
-      <DriverID>${widget.user.id}</DriverID>
-      <Notes>${notesCont.text}</Notes>
-    </CompleteOrderV3>
-  </soap:Body>
-</soap:Envelope>''';
-                                                        http.Response response =
-                                                            await http
-                                                                .post(
-                                                                    Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
-                                                                    headers: {
-                                                                      "SOAPAction":
-                                                                          "http://Mgra.WS/CompleteOrderV3",
-                                                                      "Content-Type":
-                                                                          "text/xml;charset=UTF-8",
-                                                                    },
-                                                                    body: utf8
-                                                                        .encode(
-                                                                            soap),
-                                                                    encoding: Encoding
-                                                                        .getByName(
-                                                                            "UTF-8"))
-                                                                .then(
-                                                                    (onValue) {
-                                                          return onValue;
-                                                        });
-                                                        String json = parse(
-                                                                response.body)
-                                                            .getElementsByTagName(
-                                                                'CompleteOrderV3Result')[0]
-                                                            .text;
-                                                        final decoded =
-                                                            jsonDecode(json);
+//                                                         String soap =
+//                                                             '''<?xml version="1.0" encoding="utf-8"?>
+// <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+//   <soap:Body>
+//     <CompleteOrderV3 xmlns="http://Mgra.WS/">
+//       <OrderID>${widget.orderid}</OrderID>
+//       <DriverID>${widget.user.id}</DriverID>
+//       <Notes>${notesCont.text}</Notes>
+//     </CompleteOrderV3>
+//   </soap:Body>
+// </soap:Envelope>''';
+//                                                         http.Response response =
+//                                                             await http
+//                                                                 .post(
+//                                                                     Uri.parse( 'http://tryconnect.net/api/MgraWebService.asmx' ),
+//                                                                     headers: {
+//                                                                       "SOAPAction":
+//                                                                           "http://Mgra.WS/CompleteOrderV3",
+//                                                                       "Content-Type":
+//                                                                           "text/xml;charset=UTF-8",
+//                                                                     },
+//                                                                     body: utf8
+//                                                                         .encode(
+//                                                                             soap),
+//                                                                     encoding: Encoding
+//                                                                         .getByName(
+//                                                                             "UTF-8"))
+//                                                                 .then(
+//                                                                     (onValue) {
+//                                                           return onValue;
+//                                                         });
+//                                                         String json = parse(
+//                                                                 response.body)
+//                                                             .getElementsByTagName(
+//                                                                 'CompleteOrderV3Result')[0]
+//                                                             .text;
+//                                                         final decoded =
+//                                                             jsonDecode(json);
+                                                        orderController.changeOrderStatus(orderNo, 5);
 
-                                                               SharedPreferences prefs =
+
+                                                        SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
                               prefs.setString('ColorStatus', "2");
                                                         setState(() {
@@ -1121,7 +1021,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                                               ),
                                                                               SizedBox(height: 10),
                                                                               Text(
-                                                                                decoded['sms'],
+                                                                                "sms",
                                                                                 textAlign: TextAlign.center,
                                                                               ),
                                                                             ],

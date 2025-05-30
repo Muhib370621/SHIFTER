@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:shifter/model/api_models/get_driver_all_orders.dart';
 import 'package:shifter/model/api_models/get_driver_by_ID.dart';
 import 'package:shifter/model/api_models/get_driver_new_orders.dart';
+import 'package:shifter/model/api_models/get_order_by_ID.dart';
 import 'package:shifter/services/local_storage/local_storage.dart';
 import 'package:shifter/services/local_storage/local_storage_keys.dart';
 
@@ -247,6 +248,68 @@ class AppServices {
       print("HEADERS: $header");
     }
     return GetDriverAllOrders.fromJson(ApiHelper.returnResponse(response));
+  }
+
+
+  changeOrderStatus(String orderID, int orderStatus
+      ) async {
+    // url
+    String url = AppUrls.changeOrderStatus;
+
+    //header
+    var header = AppHeaders.contentTypeWIthApplicationJsonAndAccessToken(
+      LocalStorage.readJson(
+        key: LocalStorageKeys.accessToken,
+      ),
+    );
+
+    //body
+    var data = {
+      "driverID": LocalStorage.readJson(key: LocalStorageKeys.customerID),
+      "orderID": orderID,
+      "status": orderStatus
+      // "verifyCode": verifyCode
+    };
+    var response = await http.post(Uri.parse(url),
+        body: jsonEncode(data), headers: header);
+    if (kDebugMode) {
+      print("Called API: $url");
+      print("Status Code: ${response.statusCode}");
+      print("Sent Body: ${data.toString()}");
+      print("Response Body: ${response.body}");
+      print("HEADERS: $header");
+    }
+    return (ApiHelper.returnResponse(response));
+  }
+
+  Future<GetOrderById>driverGetByOrderID(String orderID
+      ) async {
+    // url
+    String url = AppUrls.driverGetOrderByID;
+
+    //header
+    var header = AppHeaders.contentTypeWIthApplicationJsonAndAccessToken(
+      LocalStorage.readJson(
+        key: LocalStorageKeys.accessToken,
+      ),
+    );
+
+    //body
+    var data = {
+      "customerID": LocalStorage.readJson(key: LocalStorageKeys.customerID),
+      "orderID": orderID
+      // "verifyCode": verifyCode
+    };
+    var response = await http.post(Uri.parse(url),
+        body: jsonEncode(data), headers: header);
+    if (kDebugMode) {
+      print("Called API: $url");
+      print("Status Code: ${response.statusCode}");
+      print("Sent Body: ${data.toString()}");
+      print("Response Body: ${response.body}");
+      print("HEADERS: $header");
+    }
+    return GetOrderById.fromJson(ApiHelper.returnResponse(response));
   }
 
    acceptDriverOrder(String orderID,
