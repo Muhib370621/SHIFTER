@@ -3,6 +3,10 @@
         android:label="shifter"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA7eoYFrzL2Kkehdt8J_cettpgUVC2gfXo"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
