@@ -9,7 +9,7 @@ class AppUrls {
   static String verifyDriverOtpUrl = "$baseUrl/DriverCheckVerify";
   static String getDriverByID = "$baseUrl/GetDriverByID";
   static String updateDriver = "$baseUrl/UpdateDriver";
-  static String getNotifications = "$baseUrl/GetNotifications";
+  static String getNotifications = "$baseUrl/GetDriverNotifications";
 
 
   //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Order Urls~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
